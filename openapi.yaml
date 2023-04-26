@@ -1,0 +1,28 @@
+openapi: "3.0.1"
+info:
+  title: Gravitate Health Focusing Service API Interface
+  version: MVP2
+  description: Gravitate Health Focusing Service. Focuses a Focused ePI.
+  contact: {}
+servers:
+  - url: https://fosps.gravitatehealth.eu
+paths:
+  /focus:
+    post:
+      tags:
+        - Focus
+      description: Focuses a preprocessed ePI. Receives an ePI and returns it focused.
+      requestBody:
+        description: ePI to focus.
+        content:
+            application/json:
+              schema:
+                type: object
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+
