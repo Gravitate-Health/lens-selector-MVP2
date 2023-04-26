@@ -7,17 +7,11 @@ info:
 servers:
   - url: https://fosps.gravitatehealth.eu
 paths:
-  /focus:
-    post:
+  /lenses:
+    get:
       tags:
-        - Focus
-      description: Focuses a preprocessed ePI. Receives an ePI and returns it focused.
-      requestBody:
-        description: ePI to focus.
-        content:
-            application/json:
-              schema:
-                type: object
+        - Lenses
+      description: Returns all lenses IDs.
       responses:
         "200":
           description: OK
@@ -25,4 +19,29 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  lenses:
+                    type: array
+                    items:
+                      type: string
+                    example: ["lense1", "lense2", "lense3"]
+
+  /lenses/{id}:
+    get:
+      tags:
+        - Lenses
+      description: Returns the lense itself.
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metadata:
+                    type: object
+                  lense:
+                    type: string
+                    example: "console.log('Hello World!')"
 
