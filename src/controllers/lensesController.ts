@@ -4,11 +4,16 @@ import fs, { readFile, readdir } from "fs"
 
 const readLensesDir = async () => {
   try {
-    return await fs.promises.readdir(`${process.cwd()}/mockedLenses/`);
+    let path = `${process.cwd()}/mockedLenses/`
+    console.log(`Looking for lenses in path: ${path}`);
+    let discoveredLenses = await fs.promises.readdir(path);
+    console.log(`Discovered the following files in dir: ${discoveredLenses || "None"}`);
+    return discoveredLenses
   } catch (err) {
     console.error('Error occurred while reading directory!', err);
   }
 }
+
 const readLensFile = async (path: string) => {
   try {
     return await fs.promises.readFile(path, 'utf-8');
@@ -17,33 +22,30 @@ const readLensFile = async (path: string) => {
   }
 }
 
+const retrieveLensesNames = async () => {
+  try {
+    let lensesNames = await readLensesDir()
+    console.log(`Found the following lenses: ${lensesNames || "None"}`);
+    return await lensesNames
+  } catch (error) {
+    console.log(error);
+    return null
+  }
+}
+
 const retrieveLense = async (lenseId: string) => {
   let lensFilename: string = lenseId + ".js"
   let lensPath = `${process.cwd()}/mockedLenses/${lensFilename}`
 
-  let lensesNames = await readLensesDir()
-  console.log(`Found the following lenses: ${lensesNames}`);
+  let lensesNames = await retrieveLensesNames()
   console.log(`Looking for lens: ${lensFilename}`);
   if (lensesNames?.includes(lensFilename)) {
-
     try {
       return await readLensFile(lensPath)
     } catch (error) {
       console.log(error);
     }
-    
   } else {
-    return null
-  }
-}
-
-const retrieveLensesNames = async () => {
-  try {
-    let lensesNames = await readLensesDir()
-    console.log(lensesNames);
-    return await lensesNames
-  } catch (error) {
-    console.log(error);
     return null
   }
 }
@@ -56,19 +58,18 @@ export const getLens = async (req: Request, res: Response) => {
     })
     return
   }
-
   try {
     let lens = await retrieveLense(reqlens)
-    console.log("Sending lens...");
-    res.status(200).send({
+    let lensObject = {
       metadata: {},
       lens: lens
-    })
+    }
+    console.log(`Sending lens: ${JSON.stringify(lensObject)}`);
+    res.status(200).send(lensObject)
     return
   } catch (error) {
     console.log(error);
   }
-
 }
 
 export const getLensesNames = async (_req: Request, res: Response) => {
