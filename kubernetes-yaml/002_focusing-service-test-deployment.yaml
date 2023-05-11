@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: focusing-service-test
-          image: gravitate-registry.cr.de-fra.ionos.com/focusing-service-test:latest
+          image: gravitate-registry.cr.de-fra.ionos.com/focusing-service-test:test
           imagePullPolicy: Always
           env:
             - name: ENVIRONMENT

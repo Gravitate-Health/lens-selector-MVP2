@@ -4,7 +4,7 @@ import fs, { readFile, readdir } from "fs"
 
 const readLensesDir = async () => {
   try {
-    let path = `${process.cwd()}/mockedLenses/`
+    let path = `${process.cwd()}/build/mockedLenses/`
     console.log(`Looking for lenses in path: ${path}`);
     let discoveredLenses = await fs.promises.readdir(path);
     console.log(`Discovered the following files in dir: ${discoveredLenses || "None"}`);
@@ -35,7 +35,7 @@ const retrieveLensesNames = async () => {
 
 const retrieveLense = async (lenseId: string) => {
   let lensFilename: string = lenseId + ".js"
-  let lensPath = `${process.cwd()}/mockedLenses/${lensFilename}`
+  let lensPath = `${process.cwd()}/build/mockedLenses/${lensFilename}`
 
   let lensesNames = await retrieveLensesNames()
   console.log(`Looking for lens: ${lensFilename}`);
