@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: lens-selector-example
-          image: gravitate-registry.cr.de-fra.ionos.com/lens-selector-example:test
+          image: gravitate-registry.cr.de-fra.ionos.com/lens-selector-example:latest
           imagePullPolicy: Always
           env:
             - name: ENVIRONMENT
