@@ -12,30 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: focusing-service-test
-
+  name: lens-selector-example
+  labels:
+    name: lens-selector-example
+    eu.gravitate-health.fosps.focusing: "true"
 spec:
-  replicas: 1
   selector:
-    matchLabels:
-      app: focusing-service-test
-  template:
-    metadata:
-      labels:
-        app: focusing-service-test
-    spec:
-      containers:
-        - name: focusing-service-test
-          image: gravitate-registry.cr.de-fra.ionos.com/focusing-service-test:test
-          imagePullPolicy: Always
-          env:
-            - name: ENVIRONMENT
-              value: "prod"
-          ports:
-            - containerPort: 3000
-              protocol: TCP
-      restartPolicy: Always
-status: {}
+    app: lens-selector-example
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP

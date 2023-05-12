@@ -1,6 +1,8 @@
+
 let pvData = pv
 let htmlData = html
-let epiData = epi; 
+
+let epiData = epi;
 let ipsData = ips;
 
 let getSpecification = () => {
@@ -8,8 +10,7 @@ let getSpecification = () => {
 }
 //Lens code goes here, don't change function's name
 let  enhance = () => {
-
-   return {pvData, htmlData, epiData, ipsData}
+   return htmlData
 }
 
 // Returns both enhance() & getSpecification functions (do not touch this functions parameters)
