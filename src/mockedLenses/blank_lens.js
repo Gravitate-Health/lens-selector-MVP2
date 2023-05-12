@@ -1,16 +1,20 @@
-//Varibles to get the epi and ips from the focusing manager
+let pvData = pv
+let htmlData = html
 let epiData = JSON.stringify(epi); 
 let ipsData = JSON.stringify(ips);
 
-function getSpecification (){
-    return "latest"
+let getSpecification = () => {
+    return "1.0.0"
+}
+//Lens code goes here, don't change function's name
+let  enhance = () => {
+
+   return {pvData, htmlData, epiData, ipsData}
 }
 
-function enhance() {
-    return null
-}
 // Returns both enhance() & getSpecification functions (do not touch this functions parameters)
 return {
-    enhance :enhance,
-    getSpecification : getSpecification
+    enhance: enhance,
+    getSpecification: getSpecification
+
 }
