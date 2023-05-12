@@ -1,7 +1,7 @@
 let pvData = pv
 let htmlData = html
-let epiData = JSON.stringify(epi); 
-let ipsData = JSON.stringify(ips);
+let epiData = epi; 
+let ipsData = ips;
 
 let getSpecification = () => {
     return "1.0.0"
