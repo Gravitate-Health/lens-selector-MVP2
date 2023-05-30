@@ -26,11 +26,11 @@ let  enhance = () => {
                 //console.log("found pregnancyCategory or contra-indication-pregnancy")
                 //For every <span class="pregnancyCategory"> it highlights the section
                 var pregnancyCategoryRgx = /<span class="pregnancyCategory">/g;
-                response = htmlData.replace(pregnancyCategoryRgx, "<span class=\"pregnancyCategory\" style=\"background-color: yellow;color: black;\">");
+                response = htmlData.replace(pregnancyCategoryRgx, "<span class=\"pregnancyCategory highlight\">");
                 
                 //For every <span class="contra-indication-pregnancy"> it highlights the section
                 var pregnancyContraindicationCategoryRgx = /<span class="contra-indication-pregnancy">/g;
-                response = response.replace(pregnancyContraindicationCategoryRgx, "<span class=\"contra-indication-pregnancy\" style=\"background-color: yellow;color: black;\">");
+                response = response.replace(pregnancyContraindicationCategoryRgx, "<span class=\"contra-indication-pregnancy highlight\">");
             }
             
         });
