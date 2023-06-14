@@ -15,21 +15,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lens-selector-example
+  name: lens-selector-mvp2
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: lens-selector-example
+      app: lens-selector-mvp2
   template:
     metadata:
       labels:
-        app: lens-selector-example
+        app: lens-selector-mvp2
     spec:
       containers:
-        - name: lens-selector-example
-          image: gravitate-registry.cr.de-fra.ionos.com/lens-selector-example:latest
+        - name: lens-selector-mvp2
+          image: gravitate-registry.cr.de-fra.ionos.com/lens-selector-mvp2:latest
           imagePullPolicy: Always
           env:
             - name: ENVIRONMENT
