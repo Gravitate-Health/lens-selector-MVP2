@@ -26,7 +26,7 @@ let  enhance = () => {
    //Get condition categories for the ePI and filters by the condition we want to check
    let categories = []
    epi.entry.forEach(element => {
-        if (element.resource.extension != undefined || element.resource.extension != "") {
+        if (element.resource.extension != undefined) {
             element.resource.extension.forEach(category => {
                 console.log("Category found: "+ category.extension[0].valueString)
                 if (listOfCategoriesToSearch.includes(category.extension[0].valueString)) {
@@ -35,14 +35,15 @@ let  enhance = () => {
             });
         }
    });
-   if (categories == []) {
+   console.log(categories)
+   if (!categories.length) {
     return htmlData
    }
    //Focus (adds highlight class) the html applying every category found
    let response = htmlData
    categories.forEach(check => {
     const rgx = new RegExp('<span\\s+class\\s*=\\s*["\']' + check + '["\']\\s*>', 'g'); //Only checks one condition every time
-    response.replace(rgx,`<span class=\"${check} highlight\">`)
+    response = response.replace(rgx,`<span class=\"${check} highlight\">`)
    });
    //Never return empty section check
    if (response == null || response == "") {
