@@ -50,6 +50,12 @@ Service will be accessible internally from the kubernetes cluster with the url `
 ---
 ## Avaible Lenses
 
+The lenses are based on the following definition
+
+![avaible lenses](https://github.com/Gravitate-Health/lens-selector-MVP2/tree/master/images/lenses-mvp2.png)
+
+The lenses that are avaible in this package or in testing are detailed on this table
+
 | LENSE     | Description                                                                                  |
 |-----------|----------------------------------------------------------------------------------------------|
 | Pregnancy | Hightlights the pregnancyCategory, breastfeedingCategory, contra-indication-pregancy classes |
@@ -58,12 +64,12 @@ Service will be accessible internally from the kubernetes cluster with the url `
 ## Known issues and limitations
 
 
-It only recognises ePIs anotated with the \<span class=""> method and the clasess mentioned in the table above.
+It only recognises ePIs anotated with the \<span class=" "> method and the classes mentioned in the table above.
 
 ---
 ## Getting help
 
-Open an issue if any bug isdetected
+Open an issue if any bug is detected
 
 ---
 ## Contributing
