@@ -52,14 +52,14 @@ Service will be accessible internally from the kubernetes cluster with the url `
 
 The lenses are based on the following definition
 
-![avaible lenses](https://github.com/Gravitate-Health/lens-selector-MVP2/tree/master/images/lenses-mvp2.png)
+![avaible lenses](./images/lenses-mvp2.png)
 
 The lenses that are avaible in this package or in testing are detailed on this table
 
-| LENSE     | Description                                                                                  |
-|-----------|----------------------------------------------------------------------------------------------|
-| Pregnancy | Hightlights the pregnancyCategory, breastfeedingCategory, contra-indication-pregancy classes |
-| Diabetes  |                                                                                              |
+| LENSE     | DESCRIPTION                                                                                        |
+|-----------|----------------------------------------------------------------------------------------------------|
+| Pregnancy | _Hightlights the pregnancyCategory_, _breastfeedingCategory_, _contra-indication-pregancy_ classes |
+| Diabetes  |                                                                                                    |
 ---
 ## Known issues and limitations
 
