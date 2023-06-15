@@ -10,6 +10,7 @@
   - [Introduction](#introduction)
   - [Kubernetes Deployment](#kubernetes-deployment)
   - [Usage](#usage)
+  - [Avaible Lenses](#avaible-lenses)
   - [Known issues and limitations](#known-issues-and-limitations)
   - [Getting help](#getting-help)
   - [Contributing](#contributing)
@@ -40,13 +41,24 @@ metadata:
     eu.gravitate-health.fosps.focusing: "true"
 ```
 
+
 ---
 ## Usage
 
 Service will be accessible internally from the kubernetes cluster with the url `http://lens-selector-mvp2.default.svc.cluster.local:3000/focus`
 
 ---
+## Avaible Lenses
+
+| LENSE     | Description                                                                                  |
+|-----------|----------------------------------------------------------------------------------------------|
+| Pregnancy | Hightlights the pregnancyCategory, breastfeedingCategory, contra-indication-pregancy classes |
+| Diabetes  |                                                                                              |
+---
 ## Known issues and limitations
+
+
+It only recognises ePIs anotated with the \<span class=""> method and the clasess mentioned in the table above.
 
 ---
 ## Getting help
