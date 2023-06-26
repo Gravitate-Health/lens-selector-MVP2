@@ -59,7 +59,8 @@ The lenses that are avaible in this package or in testing are detailed on this t
 | LENSE     | DESCRIPTION                                                                                        |
 |-----------|----------------------------------------------------------------------------------------------------|
 | Pregnancy | _Hightlights the pregnancyCategory_, _breastfeedingCategory_, _contra-indication-pregancy_ classes |
-| Diabetes  |                                                                                                    |
+| Diabetes  | _WIP_                                                                                              |
+| HIV       | _WIP_                                                                                              |
 ---
 ## Known issues and limitations
 
