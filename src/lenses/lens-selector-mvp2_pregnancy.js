@@ -9,6 +9,21 @@ let getSpecification = () => {
     return "1.0.0"
 }
 
+let annotateHTMLsection = (listOfCategories, enhanceTag) => {
+    let response = htmlData
+    listOfCategories.forEach(check => {
+     const rgx = new RegExp('<span\\s+class\\s*=\\s*["\']' + check + '["\']\\s*>', 'g'); //Only checks one condition every time
+     response = response.replace(rgx,`<span class=\"${check} ${enhanceTag}\">`)
+    });
+    //Never return empty section check
+    if (response == null || response == "") {
+     return htmlData
+    }
+    else {
+     return response
+    }
+}
+
 let  enhance = () => {
     let listOfCategoriesToSearch = ["pregnancyCategory", "breastfeedingCategory", "contra-indication-pregancy"]
 
@@ -40,18 +55,7 @@ let  enhance = () => {
     return htmlData
    }
    //Focus (adds highlight class) the html applying every category found
-   let response = htmlData
-   categories.forEach(check => {
-    const rgx = new RegExp('<span\\s+class\\s*=\\s*["\']' + check + '["\']\\s*>', 'g'); //Only checks one condition every time
-    response = response.replace(rgx,`<span class=\"${check} highlight\">`)
-   });
-   //Never return empty section check
-   if (response == null || response == "") {
-    return htmlData
-   }
-   else {
-    return response
-   }
+   return annotateHTMLsection(categories, "highlight")
 }
 return {
     enhance: enhance,
