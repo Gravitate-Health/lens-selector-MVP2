@@ -66,7 +66,7 @@ let enhance = () => {
                     // Search through the different terminologies that may be avaible to check in the condition
                     element.extension[1].valueCodeableReference.concept.coding.forEach(termilogySystem => {
                         // Adds the category to be hightlighted in the epi
-                        if (listOfCategoriesToSearch.find(termilogySystem.code)) {
+                        if (listOfCategoriesToSearch.find((cat) => cat == termilogySystem.code)) {
                             categories.push(termilogySystem.display)
                         }
                     });

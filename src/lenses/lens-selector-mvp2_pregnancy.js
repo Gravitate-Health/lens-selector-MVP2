@@ -28,7 +28,7 @@ let annotateHTMLsection = (listOfCategories, enhanceTag) => {
 let  enhance = () => {
     //                  pregnancyCategory    breastfeedingCategory
     //                              ICPC2    SNOMED               
-    let listOfCategoriesToSearch = ["W78", "69840006", ]//"contra-indication-pregancy"]
+    let listOfCategoriesToSearch = ["W78", "69840006"]//"contra-indication-pregancy"]
 
     // Get IPS gender and check if is female 
     let gender;
@@ -59,7 +59,7 @@ let  enhance = () => {
                         // Search through the different terminologies that may be avaible to check in the condition
                         element.extension[1].valueCodeableReference.concept.coding.forEach(termilogySystem => {
                             // Adds the category to be hightlighted in the epi
-                            if (listOfCategoriesToSearch.find(termilogySystem.code)) {
+                            if (listOfCategoriesToSearch.find((cat) => cat == termilogySystem.code)) {
                                 categories.push(termilogySystem.display)
                             }
                         });
@@ -67,7 +67,7 @@ let  enhance = () => {
             });
         }
     });
-    if (compositions = 0) {
+    if (compositions == 0) {
         throw new Error('Bad ePI: no category "Composition" found');
     }
 
