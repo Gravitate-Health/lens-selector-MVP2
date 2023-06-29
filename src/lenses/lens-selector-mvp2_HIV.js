@@ -48,7 +48,7 @@ let haveHIV = (ips) => {
 let enhance = () => {
     // Check if the patient has HIV
     if (!haveHIV(ips)) {
-        throw new Error('Bad IPS: no HIV related condition encontered')
+        return htmlData
     }
 
     let listOfCategoriesToSearch = ["B90"]; // This is the code for AIDS in ICPC-2
@@ -64,12 +64,15 @@ let enhance = () => {
                 // Check if the position of the extension[1] is correct
                 if (element.extension[1].url == "concept") {
                     // Search through the different terminologies that may be avaible to check in the condition
-                    element.extension[1].valueCodeableReference.concept.coding.forEach(termilogySystem => {
-                        // Adds the category to be hightlighted in the epi
-                        if (listOfCategoriesToSearch.find((cat) => cat == termilogySystem.code)) {
-                            categories.push(termilogySystem.display)
-                        }
-                    });
+                    if (element.extension[1].valueCodeableReference.coding != null) {
+                        element.extension[1].valueCodeableReference.coding.forEach(coding => {
+                            // Check if the code is in the list of categories to search
+                            if (listOfCategoriesToSearch.includes(coding.code)) {
+                                // Check if the category is already in the list of categories
+                                categories.push(coding.code)
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -80,10 +83,7 @@ let enhance = () => {
 
     if (!categories.length) {
         console.log(categories);
-        if (!categories.length) {
-            return htmlData;
-        }
-        throw new Error('No categories found', categories);
+        return htmlData;
     }
 
     //Focus (adds highlight class) the html applying every category found
