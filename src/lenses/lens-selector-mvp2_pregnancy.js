@@ -31,7 +31,7 @@ let annotateHTMLsection = (listOfCategories, enhanceTag) => {
 let enhance = () => {
     //                  pregnancyCategory    breastfeedingCategory
     //                             SNOMED    SNOMED
-    let listOfCategoriesToSearch = ["77386006", "69840006"]; //"contra-indication-pregancy"]
+    let listOfCategoriesToSearch = ["W78", "77386006", "69840006"]; //"contra-indication-pregancy"]
 
     // Get IPS gender and check if is female
     let gender;
@@ -77,7 +77,6 @@ let enhance = () => {
         }
     });
 
-    console.log("Categories: " + categories);
     if (compositions == 0) {
         throw new Error('Bad ePI: no category "Composition" found');
     }
