@@ -1,0 +1,23 @@
+name: Main import action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+  docker:
+    uses: Gravitate-Health/.github/.github/workflows/main.yml@main
+    with:
+      image_name: my-awesome-app
+      tag: $GITHUB_RUN_NUMBER
+    secrets:
+      registry_username: ${{secrets.REGISTRY_USERNAME}}
+      registry_password: ${{secrets.REGISTRY_PASSWORD}}
