@@ -6,15 +6,8 @@ on:
         - "*"
 
 jobs:
-
   docker:
     uses: Gravitate-Health/reusable-workflows/.github/workflows/main.yml@main
     secrets:
       REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
-    #with:
-    #  image_name: my-awesome-app
-    #  tag: $GITHUB_RUN_NUMBER
-    #secrets:
-    #  registry_username: ${{secrets.REGISTRY_USERNAME}}
-    #  registry_password: ${{secrets.REGISTRY_PASSWORD}}
