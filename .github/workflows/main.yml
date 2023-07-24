@@ -6,17 +6,12 @@ on:
         - "*"
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Run a one-line script
-        run: echo Hello, world!
 
   docker:
     uses: Gravitate-Health/reusable-workflows/.github/workflows/main.yml@main
+    secrets:
+      REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
     #with:
     #  image_name: my-awesome-app
     #  tag: $GITHUB_RUN_NUMBER
