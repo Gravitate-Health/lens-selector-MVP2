@@ -10,4 +10,4 @@ jobs:
     uses: Gravitate-Health/reusable-workflows/.github/workflows/main.yml@main
     secrets:
       REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
-      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+      REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }} 
