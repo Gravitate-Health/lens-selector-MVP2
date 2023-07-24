@@ -1,13 +1,15 @@
 name: Main import action
 
 on:
-    push:
-      branches:
-        - "*"
+  push:
+    branches:
+      - "*"
 
 jobs:
   docker:
     uses: Gravitate-Health/reusable-workflows/.github/workflows/main.yml@main
+    with:
+      IMAGE_NAME: lens-selector-mvp2
     secrets:
       REGISTRY_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }} 
