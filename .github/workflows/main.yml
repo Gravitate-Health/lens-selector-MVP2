@@ -16,7 +16,7 @@ jobs:
         run: echo Hello, world!
 
   docker:
-    uses: Gravitate-Health/.github/.github/workflows-templates/main.yml@main
+    uses: Gravitate-Health/.github/workflows-templates/main.yml@main
     with:
       image_name: my-awesome-app
       tag: $GITHUB_RUN_NUMBER
