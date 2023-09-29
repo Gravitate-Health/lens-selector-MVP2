@@ -33,8 +33,8 @@ let  enhance = () => {
    //Focus (adds highlight class) the html applying every category found
    let response = htmlData
    categories.forEach(check => {
-    const rgx = new RegExp('<span\\s+class\\s*=\\s*["\']' + check + '["\']\\s*>', 'g'); //Only checks one condition every time
-    response = response.replace(rgx,`<span class=\"${check} highlight\">`)
+    const rgx = new RegExp('<div\\s+class\\s*=\\s*["\']' + check + '["\']\\s*>', 'g'); //Only checks one condition every time
+    response = response.replace(rgx,`<div class=\"${check} highlight\">`)
    });
    //Never return empty section check
    if (response == null || response == "") {

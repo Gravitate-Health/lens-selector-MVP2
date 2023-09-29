@@ -12,10 +12,10 @@ let annotateHTMLsection = (listOfCategories, enhanceTag) => {
     let response = htmlData;
     listOfCategories.forEach((check) => {
         const rgx = new RegExp(
-            "<span\\s+class\\s*=\\s*[\"']" + check + "[\"']\\s*>",
+            "<div\\s+class\\s*=\\s*[\"']" + check + "[\"']\\s*>",
             "g"
         ); //Only checks one condition every time
-        response = response.replace(rgx, `<span class=\"${check} ${enhanceTag}\">`);
+        response = response.replace(rgx, `<div class=\"${check} ${enhanceTag}\">`);
     });
     //Never return empty section check
     if (response == null || response == "") {
