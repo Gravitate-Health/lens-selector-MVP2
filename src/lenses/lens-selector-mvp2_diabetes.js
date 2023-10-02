@@ -13,10 +13,11 @@ let annotateHTMLsection = (listOfCategories, enhanceTag) => {
     let document;
 
     if (typeof window === "undefined") {
-        let jsdom = require("jsdom");
-        let { JSDOM } = jsdom;
-        let dom = new JSDOM(htmlData);
-        document = dom.window.document;
+        import("jsdom").then((jsdom) => {
+            let { JSDOM } = jsdom;
+            let dom = new JSDOM(htmlData);
+            document = dom.window.document;
+        });
     } else {
         document = window.document;
     }
