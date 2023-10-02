@@ -9,21 +9,38 @@ let getSpecification = () => {
 };
 
 let annotateHTMLsection = (listOfCategories, enhanceTag) => {
+    let document;
+
+    if (typeof window === "undefined") {
+        let jsdom = require("jsdom");
+        let { JSDOM } = jsdom;
+        let dom = new JSDOM(htmlData);
+        document = dom.window.document;
+    } else {
+        document = window.document;
+    }
+
     let response = htmlData;
+
     listOfCategories.forEach((check) => {
-        const rgx = new RegExp(
-            "<div\\s+class\\s*=\\s*[\"']" + check + "[\"']\\s*>",
-            "g"
-        ); //Only checks one condition every time
-        response = response.replace(rgx, `<div class=\"${check} ${enhanceTag}\">`);
+        if(response.includes(check)) {
+            let baseDom = document.createElement("div");
+            baseDom.innerHTML = response;
+            let elements = baseDom.getElementsByClassName(check);
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].classList.add(enhanceTag);
+            }
+            response = baseDom.innerHTML;
+        }
     });
-    //Never return empty section check
+
     if (response == null || response == "") {
         throw new Error(
             "Annotation proccess failed: Returned empty or null response"
         );
         //return htmlData
     } else {
+        console.log("Response: " + response);
         return response;
     }
 };
