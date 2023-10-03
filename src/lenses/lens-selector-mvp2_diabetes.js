@@ -9,28 +9,23 @@ let getSpecification = () => {
     return "1.0.0"
 }
 
+let getDocument = (htmlData) => {
+    if (typeof window === "undefined") {
+        let jsdom = require("jsdom");
+        let { JSDOM } = jsdom;
+        let dom = new JSDOM(htmlData);
+        return dom.window.document;
+    } else {
+        return window.document;
+    }
+}
+
 let annotateHTMLsection = (listOfCategories, enhanceTag) => {
 
-    let document;
-    if (typeof window === "undefined") {
-        import("jsdom").then((jsdom) => {
-            let { JSDOM } = jsdom;
-            let dom = new JSDOM(htmlData);
-            document = dom.window.document.documentElement;
-            console.log("Document: " + document.innerHTML);
-        });
-    } else {
-        document = window.document.documentElement;
-    }
-
-    let headElement = document.getElementsByTagName("head")[0];
-    headElement.remove();
-
-
-    console.log("Document post delete: " + document.innerHTML);
-
     let response = htmlData;
+    let document = getDocument(htmlData);
 
+    console.log("Document pre delete: " + document.documentElement.innerHTML);
     listOfCategories.forEach((check) => {
         if (response.includes(check)) {
             console.log("Debería tener el check: " + check);
@@ -38,8 +33,8 @@ let annotateHTMLsection = (listOfCategories, enhanceTag) => {
             for (let i = 0; i < elements.length; i++) {
                 elements[i].classList.add(enhanceTag);
             }
-            console.log("Response: " + document.innerHTML);
-            response = document.innerHTML;
+            console.log("Response: " + document.documentElement.innerHTML);
+            response = document.documentElement.innerHTML;
         }
     });
 

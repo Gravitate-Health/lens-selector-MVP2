@@ -8,30 +8,31 @@ let getSpecification = () => {
     return "1.0.0";
 };
 
-let annotateHTMLsection = (listOfCategories, enhanceTag) => {
-    let document;
-
+let getDocument = (htmlData) => {
     if (typeof window === "undefined") {
-        import("jsdom").then((jsdom) => {
-            let { JSDOM } = jsdom;
-            let dom = new JSDOM(htmlData);
-            document = dom.window.document;
-        });
+        let jsdom = require("jsdom");
+        let { JSDOM } = jsdom;
+        let dom = new JSDOM(htmlData);
+        return dom.window.document;
     } else {
-        document = window.document;
+        return window.document;
     }
+}
 
+let annotateHTMLsection = (listOfCategories, enhanceTag) => {
     let response = htmlData;
+    let document = getDocument(htmlData);
 
+    console.log("Document pre delete: " + document.documentElement.innerHTML);
     listOfCategories.forEach((check) => {
-        if(response.includes(check)) {
-            let baseDom = document.createElement("div");
-            baseDom.innerHTML = response;
-            let elements = baseDom.getElementsByClassName(check);
+        if (response.includes(check)) {
+            console.log("Debería tener el check: " + check);
+            let elements = document.getElementsByClassName(check);
             for (let i = 0; i < elements.length; i++) {
                 elements[i].classList.add(enhanceTag);
             }
-            response = baseDom.innerHTML;
+            console.log("Response: " + document.documentElement.innerHTML);
+            response = document.documentElement.innerHTML;
         }
     });
 
