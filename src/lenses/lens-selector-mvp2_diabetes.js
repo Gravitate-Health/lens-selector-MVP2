@@ -10,29 +10,36 @@ let getSpecification = () => {
 }
 
 let annotateHTMLsection = (listOfCategories, enhanceTag) => {
-    let document;
 
+    let document;
     if (typeof window === "undefined") {
         import("jsdom").then((jsdom) => {
             let { JSDOM } = jsdom;
             let dom = new JSDOM(htmlData);
-            document = dom.window.document;
+            document = dom.window.document.documentElement;
+            console.log("Document: " + document.innerHTML);
         });
     } else {
-        document = window.document;
+        document = window.document.documentElement;
     }
+
+    let headElement = document.getElementsByTagName("head")[0];
+    headElement.remove();
+
+
+    console.log("Document post delete: " + document.innerHTML);
 
     let response = htmlData;
 
     listOfCategories.forEach((check) => {
         if (response.includes(check)) {
-            let baseDom = document.createElement("div");
-            baseDom.innerHTML = response;
-            let elements = baseDom.getElementsByClassName(check);
+            console.log("Debería tener el check: " + check);
+            let elements = document.getElementsByClassName(check);
             for (let i = 0; i < elements.length; i++) {
                 elements[i].classList.add(enhanceTag);
             }
-            response = baseDom.innerHTML;
+            console.log("Response: " + document.innerHTML);
+            response = document.innerHTML;
         }
     });
 
@@ -57,7 +64,6 @@ let enhance = () => {
     epi.entry.forEach(element => {
         if (element.resource.extension != undefined) {
             element.resource.extension.forEach(category => {
-                console.log("Category found: " + category.extension[0].valueString)
                 if (listOfCategoriesToSearch.includes(category.extension[0].valueString)) {
                     categories.push(category.extension[0].valueString)
                 }
@@ -66,9 +72,6 @@ let enhance = () => {
     });
 
     //Focus (adds highlight class) the html applying every category found
-    if (compositions == 0) {
-        throw new Error('Bad ePI: no category "Composition" found');
-    }
 
     if (categories.length == 0) {
         throw new Error("No categories found", categories);
