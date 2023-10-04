@@ -8,7 +8,7 @@ let getSpecification = () => {
     return "1.0.0";
 };
 
-let getDocument = (htmlData) => {
+let getDocument = async (htmlData) => {
     if (typeof window === "undefined") {
         let jsdom = require("jsdom");
         let { JSDOM } = jsdom;
@@ -31,6 +31,7 @@ let annotateHTMLsection = (listOfCategories, enhanceTag) => {
             for (let i = 0; i < elements.length; i++) {
                 elements[i].classList.add(enhanceTag);
             }
+            document.getElementsByTagName("head")[0].remove();
             console.log("Response: " + document.documentElement.innerHTML);
             response = document.documentElement.innerHTML;
         }
