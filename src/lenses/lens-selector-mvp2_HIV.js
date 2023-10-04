@@ -16,7 +16,9 @@ let annotationProcess = (listOfCategories, enhanceTag, document, response) => {
             for (let i = 0; i < elements.length; i++) {
                 elements[i].classList.add(enhanceTag);
             }
-            document.getElementsByTagName("head")[0].remove();
+            if (document.getElementsByTagName("head").length > 0) {
+                document.getElementsByTagName("head")[0].remove();
+            }
             if (document.getElementsByTagName("body").length > 0) {
                 response = document.getElementsByTagName("body")[0].firstElementChild.innerHTML;
                 console.log("Response: " + response);
