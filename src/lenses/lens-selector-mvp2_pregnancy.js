@@ -8,27 +8,55 @@ let getSpecification = () => {
     return "1.0.0";
 };
 
-let annotateHTMLsection = (listOfCategories, enhanceTag) => {
-    let response = htmlData;
+let annotationProcess = (listOfCategories, enhanceTag, document, response) => {
     listOfCategories.forEach((check) => {
-        const rgx = new RegExp(
-            "<div\\s+class\\s*=\\s*[\"']" + check + "[\"']\\s*>",
-            "g"
-        ); //Only checks one condition every time
-        response = response.replace(rgx, `<div class=\"${check} ${enhanceTag}\">`);
+        if (response.includes(check)) {
+            console.log("Debería tener el check: " + check);
+            let elements = document.getElementsByClassName(check);
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].classList.add(enhanceTag);
+            }
+            if (document.getElementsByTagName("head").length > 0) {
+                document.getElementsByTagName("head")[0].remove();
+            }
+            if (document.getElementsByTagName("body").length > 0) {
+                response = document.getElementsByTagName("body")[0].firstElementChild.innerHTML;
+                console.log("Response: " + response);
+            } else {
+                console.log("Response: " + document.documentElement.innerHTML);
+                response = document.documentElement.innerHTML;
+            }
+        }
     });
-    //Never return empty section check
+
     if (response == null || response == "") {
         throw new Error(
             "Annotation proccess failed: Returned empty or null response"
         );
         //return htmlData
     } else {
+        console.log("Response: " + response);
         return response;
+    }
+}
+
+let annotateHTMLsection = async (listOfCategories, enhanceTag) => {
+    let response = htmlData;
+    let document;
+
+    if (typeof window === "undefined") {
+        let jsdom = await import("jsdom");
+        let { JSDOM } = jsdom;
+        let dom = new JSDOM(htmlData);
+        document = dom.window.document;
+        return annotationProcess(listOfCategories, enhanceTag, document, response);
+    } else {
+        document = window.document;
+        return annotationProcess(listOfCategories, enhanceTag, document, response);
     }
 };
 
-let enhance = () => {
+let enhance = async () => {
     //                  pregnancyCategory    breastfeedingCategory
     //                             SNOMED    SNOMED
     let listOfCategoriesToSearch = ["W78", "77386006", "69840006"]; //"contra-indication-pregancy"]
@@ -85,8 +113,9 @@ let enhance = () => {
         throw new Error("No categories found", categories);
     }
     //Focus (adds highlight class) the html applying every category found
-    return annotateHTMLsection(categories, "highlight");
+    return await annotateHTMLsection(categories, "highlight");
 };
+
 return {
     enhance: enhance,
     getSpecification: getSpecification,

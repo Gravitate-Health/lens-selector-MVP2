@@ -75,6 +75,12 @@ export const getLens = async (req: Request, res: Response) => {
 export const getLensesNames = async (_req: Request, res: Response) => {
   Logger.logInfo('focusing.ts', 'getLensesNames', `queried /lenses function`)
   let lensesNames = await retrieveLensesNames()
+  if (!lensesNames) {
+    res.status(500).send({
+      message: "Error occurred while reading lenses directory."
+    });
+    return
+  }
   res.status(200).send({
     lenses: lensesNames
   });
