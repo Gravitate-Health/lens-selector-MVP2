@@ -20,7 +20,7 @@ let annotationProcess = (listOfCategories, enhanceTag, document, response) => {
                 document.getElementsByTagName("head")[0].remove();
             }
             if (document.getElementsByTagName("body").length > 0) {
-                response = document.getElementsByTagName("body")[0].firstElementChild.innerHTML;
+                response = document.getElementsByTagName("body")[0].innerHTML;
                 console.log("Response: " + response);
             } else {
                 console.log("Response: " + document.documentElement.innerHTML);
@@ -115,7 +115,8 @@ let enhance = async () => {
     }
 
     if (categories.length == 0) {
-        throw new Error("No categories found", categories);
+        //throw new Error("No categories found", categories);
+        return htmlData;
     }
     //Focus (adds highlight class) the html applying every category found
     return await annotateHTMLsection(categories, "highlight");
