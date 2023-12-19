@@ -59,7 +59,8 @@ let annotateHTMLsection = async (listOfCategories, enhanceTag) => {
 let enhance = async () => {
     
     let listOfCategoriesToSearch = [
-        "XK4IUX8MNB" // contra-indication-hypericum
+        "XK4IUX8MNB", // contra-indication-hypericum
+        "SY7Q814VUP",  // contra-indication-calcium
     ];
 
     // Get IPS gender and check if is female
