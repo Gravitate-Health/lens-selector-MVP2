@@ -125,7 +125,7 @@ let enhance = async () => {
         return htmlData;
     }
     //Focus (adds highlight class) the html applying every category found
-    return await annotateHTMLsection(categories, "collapse");
+    return await annotateHTMLsection(categories, "collapsed");
 };
 
 return {
