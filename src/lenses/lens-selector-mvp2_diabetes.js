@@ -12,7 +12,6 @@ let getSpecification = () => {
 let annotationProcess = (listOfCategories, enhanceTag, document, response) => {
     listOfCategories.forEach((check) => {
         if (response.includes(check)) {
-            console.log("Debería tener el check: " + check);
             let elements = document.getElementsByClassName(check);
             for (let i = 0; i < elements.length; i++) {
                 elements[i].classList.add(enhanceTag);
