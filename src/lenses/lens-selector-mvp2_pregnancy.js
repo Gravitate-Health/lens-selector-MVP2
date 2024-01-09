@@ -55,6 +55,16 @@ let annotateHTMLsection = async (listOfCategories, enhanceTag) => {
     }
 };
 
+let getIPSAge = (birthDate) => {
+    let today = new Date();
+    let birthDateParsed = new Date(birthDate);
+
+    let ageMiliseconds = today - birthDateParsed;
+    let age = Math.floor(ageMiliseconds / 31536000000);
+
+    return age;
+}
+
 let enhance = async () => {
     //                  pregnancyCategory    breastfeedingCategory
     //                             SNOMED    SNOMED
@@ -63,14 +73,18 @@ let enhance = async () => {
     // Get IPS gender and check if is female
     let gender;
 
+    let enhanceTag;
+
     if (ips == "" || ips == null) {
         throw new Error("Failed to load IPS: the LEE is getting a empty IPS");
     }
     ips.entry.forEach((element) => {
         if (element.resource.resourceType == "Patient") {
             gender = element.resource.gender;
-            if (gender != "female") {
-                return htmlData;
+            if (gender != "female" || getIPSAge(element.resource.birthDate) >= 75) {
+                enhanceTag = "collapse";
+            } else {
+                enhanceTag = "highlight";
             }
         }
     });
@@ -113,7 +127,7 @@ let enhance = async () => {
         return htmlData;
     }
     //Focus (adds highlight class) the html applying every category found
-    return await annotateHTMLsection(categories, "highlight");
+    return await annotateHTMLsection(categories, enhanceTag);
 };
 
 return {
