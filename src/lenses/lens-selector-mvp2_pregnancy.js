@@ -82,7 +82,7 @@ let enhance = async () => {
         if (element.resource.resourceType == "Patient") {
             gender = element.resource.gender;
             if (gender != "female" || getIPSAge(element.resource.birthDate) >= 75) {
-                enhanceTag = "collapse";
+                enhanceTag = "collapsed";
             } else {
                 enhanceTag = "highlight";
             }
