@@ -26,13 +26,7 @@ let enhance = async () => {
         })
     };
 
-    /**
-     * @typedef {{htmlString: string}} PythonLenseResponse
-     * @type {Promise<PythonLenseResponse>}
-     */
-    let response;
-
-    response = await fetch(url, options)
+    let response = await fetch(url, options)
     .then((response) => {
         return response.json();
     }).catch((error) => {
