@@ -1,0 +1,65 @@
+{
+    "resourceType" : "Library",
+    "id" : "fhir-lens-proxy-pregnancy",
+    "meta" : {
+      "profile" : ["http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lens"]
+    },
+    "text" : {
+      "status" : "generated",
+      "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>Parameters</h2><table class=\"grid\"><tr><td/><td>in</td><td/><td/><td>CodeableConcept</td><td>parameter documentation</td></tr></table><h2>Contents</h2><p><code>application/javascript</code></p><pre><code>Classic Pregnancy Lens</code></pre></div>"
+    },
+    "extension" : [{
+      "url" : "http://hl7.eu/fhir/ig/gravitate-health/StructureDefinition/lee-version",
+      "valueString" : "0.1"
+    }],
+    "url" : "http://hl7.eu/fhir/ig/gravitate-health/Library/mock-lib",
+    "identifier" : [{
+      "system" : "http://gravitate-health.lst.tfo.upm.es",
+      "value" : "fhir-lens-proxy-pregnancy"
+    }],
+    "version" : "0.1.0",
+    "name" : "fhir-lens-proxy-pregnancy",
+    "title" : "Proxy Pregnancy Lens - Now in FHIR format and with metadata", 
+    "status" : "draft",
+    "experimental" : true,
+    "type" : {
+      "coding" : [{
+        "code" : "logical-library"
+      }]
+    },
+    "date" : "2024-02-29T10:54:27+00:00",
+    "publisher" : "Gravitate Health Project - UPM Team",
+    "contact" : [{
+      "name" : "Gravitate Health Project",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.gravitatehealth.eu/"
+      }]
+    },
+    {
+      "name" : "Gravitate Health Project",
+      "telecom" : [{
+        "system" : "url",
+        "value" : "https://www.gravitatehealth.eu/"
+      }]
+    }],
+    "description" : "Original Lens made on Python. This lens connect with a service that executes the core computiong of the lens. If a person is female and between 18 and 70 years, information about pregnancy is going to be highlighted. if a person is a man, the information is collapsed",
+    "jurisdiction" : [{
+      "coding" : [{
+        "system" : "urn:iso:std:iso:3166",
+        "code" : "AD"
+      }]
+    }],
+    "purpose" : "The Pregnancy Lens is a lens that highlights information about pregnancy in the ePIs. It is intended to be used by patients to identify relevant information about pregnancy in the leaflets.",
+    "usage" : "Deploy the external service. Just apply it on the app",
+    "copyright" : "copyright label",
+    "parameter" : [{
+      "use" : "in",
+      "documentation" : "parameter documentation",
+      "type" : "CodeableConcept"
+    }],
+    "content" : [{
+      "contentType" : "application/javascript",
+      "data" : "bGV0IHB2RGF0YSA9IHB2OwpsZXQgaHRtbERhdGEgPSBodG1sOwoKbGV0IGVwaURhdGEgPSBlcGk7CmxldCBpcHNEYXRhID0gaXBzOwoKbGV0IGdldFNwZWNpZmljYXRpb24gPSAoKSA9PiB7CiAgICByZXR1cm4gIjEuMC4wIjsKfTsKCmxldCBlbmhhbmNlID0gYXN5bmMgKCkgPT4gewogICAgCiAgICBjb25zdCBob3N0ID0gcHJvY2Vzcy5lbnYuUFJPWFlfTEVOU19FTlYgPT0gImRldiIgPyAiaHR0cHM6Ly9ncmF2aXRhdGUtaGVhbHRoLmxzdC50Zm8udXBtLmVzIiA6ICJodHRwczovL2dyYXZpdGF0ZS1oZWFsdGgubHN0LnRmby51cG0uZXMiIC8vImh0dHBzOi8vZm9zcHMuZ3Jhdml0YXRlaGVhbHRoLmV1LyI7CiAgICBjb25zdCB1cmwgPSBgJHtob3N0fS9leHRlcm5hbC9wcmVnbmFuY3lgCiAgICBjb25zdCBvcHRpb25zID0gewogICAgICAgIG1ldGhvZDogIlBPU1QiLAogICAgICAgIGhlYWRlcnM6IHsKICAgICAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uIiwKICAgICAgICAgICAgIkFjY2VwdCI6ICJhcHBsaWNhdGlvbi9qc29uIgogICAgICAgIH0sCiAgICAgICAgYm9keTogSlNPTi5zdHJpbmdpZnkoewogICAgICAgICAgICBwdkRhdGE6IHB2LAogICAgICAgICAgICBodG1sRGF0YTogaHRtbCwKICAgICAgICAgICAgZXBpRGF0YTogSlNPTi5zdHJpbmdpZnkoZXBpKSwKICAgICAgICAgICAgaXBzRGF0YTogSlNPTi5zdHJpbmdpZnkoaXBzKQogICAgICAgIH0pCiAgICB9OwoKICAgIGxldCByZXNwb25zZSA9IGF3YWl0IGZldGNoKHVybCwgb3B0aW9ucykKICAgIC50aGVuKChyZXNwb25zZSkgPT4gewogICAgICAgIHJldHVybiByZXNwb25zZS5qc29uKCk7CiAgICB9KS5jYXRjaCgoZXJyb3IpID0+IHsKICAgICAgICB0aHJvdyBuZXcgRXJyb3IoZXJyb3IpOwogICAgfSk7CgogICAgcmV0dXJuIHJlc3BvbnNlLmh0bWxTdHJpbmc7Cn07CgpyZXR1cm4gewogICAgZW5oYW5jZTogZW5oYW5jZSwKICAgIGdldFNwZWNpZmljYXRpb246IGdldFNwZWNpZmljYXRpb24sCn07"
+    }]
+  }
