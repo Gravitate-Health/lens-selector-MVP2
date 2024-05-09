@@ -4,10 +4,6 @@ let htmlData = html;
 let epiData = epi;
 let ipsData = ips;
 
-let getSpecification = () => {
-    return "1.0.0";
-};
-
 let annotationProcess = (listOfCategories, enhanceTag, document, response) => {
     listOfCategories.forEach((check) => {
         if (response.includes(check)) {
@@ -56,27 +52,27 @@ let annotateHTMLsection = async (listOfCategories, enhanceTag) => {
 };
 
 let enhance = async () => {
-    let listOfCategoriesToSearch = ["B90", "86406008"];
-
+    // Proves that IPS exists
     if (ips == "" || ips == null) {
         throw new Error("Failed to load IPS: the LEE is getting a empty IPS");
     }
 
-    //Search for the condition in the IPS
-    let patientHasCondition = false;
+    // Instantiates the array of condition codes
+    let arrayOfConditionCodes = [];
+
+    // Iterates through the IPS entry searching for conditions
     ips.entry.forEach((element) => {
         if (element.resource.resourceType == "Condition") {
             if (element.resource.code != undefined) {
                 element.resource.code.coding.forEach((coding) => {
-                    if (listOfCategoriesToSearch.includes(coding.code)) {
-                        patientHasCondition = true;
-                    }
+                    arrayOfConditionCodes.push(coding.code);
                 });
             }
         }
     });
 
-    if (!patientHasCondition) {
+    // If there are no conditions, return the ePI as it is
+    if (arrayOfConditionCodes.length == 0) {
         return htmlData;
     }
 
@@ -97,7 +93,7 @@ let enhance = async () => {
                             (coding) => {
                                 console.log("Extension: " + element.extension[0].valueString + ":" + coding.code)
                                 // Check if the code is in the list of categories to search
-                                if (listOfCategoriesToSearch.includes(coding.code)) {
+                                if (arrayOfConditionCodes.includes(coding.code)) {
                                     // Check if the category is already in the list of categories
                                     categories.push(element.extension[0].valueString);
                                 }
@@ -114,9 +110,9 @@ let enhance = async () => {
     }
 
     if (categories.length == 0) {
-        //throw new Error("No categories found", categories);
         return htmlData;
     }
+    
     //Focus (adds highlight class) the html applying every category found
     return await annotateHTMLsection(categories, "highlight");
 };
