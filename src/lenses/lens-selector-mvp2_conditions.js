@@ -4,6 +4,10 @@ let htmlData = html;
 let epiData = epi;
 let ipsData = ips;
 
+let getSpecification = () => {
+    return "1.0.0";
+};
+
 let enhance = async () => {
     // Proves that IPS exists
     if (ips == "" || ips == null) {
