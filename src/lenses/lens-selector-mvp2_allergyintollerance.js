@@ -8,6 +8,75 @@ let getSpecification = () => {
     return "1.0.0";
 };
 
+let enhance = async () => {
+    // Proves that IPS exists
+    if (ips == "" || ips == null) {
+        throw new Error("Failed to load IPS: the LEE is getting a empty IPS");
+    }
+
+    // Instantiates the array of condition codes
+    let arrayOfConditionCodes = [];
+
+    // Iterates through the IPS entry searching for conditions
+    ips.entry.forEach((element) => {
+        if (element.resource.resourceType == "Condition") {
+            if (element.resource.code != undefined) {
+                element.resource.code.coding.forEach((coding) => {
+                    arrayOfConditionCodes.push({
+                        code: coding.code,
+                        system: coding.system,
+                    });
+                });
+            }
+        }
+    });
+
+    // If there are no conditions, return the ePI as it is
+    if (arrayOfConditionCodes.length == 0) {
+        return htmlData;
+    }
+
+    // ePI traslation from terminology codes to their human redable translations in the sections
+    let compositions = 0;
+    let categories = [];
+    epi.entry.forEach((entry) => {
+        if (entry.resource.resourceType == "AllergyIntolerance") {
+            compositions++;
+            //Iterated through the Condition element searching for conditions
+            entry.resource.extension.forEach((element) => {
+                
+                // Check if the position of the extension[1] is correct
+                if (element.extension[1].url == "concept") {
+                    // Search through the different terminologies that may be avaible to check in the condition
+                    if (element.extension[1].valueCodeableReference.concept != undefined) {
+                        element.extension[1].valueCodeableReference.concept.coding.forEach(
+                            (coding) => {
+                                console.log("Extension: " + element.extension[0].valueString + ":" + coding.code + " - " + coding.system)
+                                // Check if the code is in the list of categories to search
+                                if (equals(arrayOfConditionCodes, { code: coding.code, system: coding.system })) {
+                                    // Check if the category is already in the list of categories
+                                    categories.push(element.extension[0].valueString);
+                                }
+                            }
+                        );
+                    }
+                }
+            });
+        }
+    });
+
+    if (compositions == 0) {
+        throw new Error('Bad ePI: no category "Composition" found');
+    }
+
+    if (categories.length == 0) {
+        return htmlData;
+    }
+    
+    //Focus (adds highlight class) the html applying every category found
+    return await annotateHTMLsection(categories, "highlight");
+};
+
 let annotationProcess = (listOfCategories, enhanceTag, document, response) => {
     listOfCategories.forEach((check) => {
         if (response.includes(check)) {
@@ -55,67 +124,11 @@ let annotateHTMLsection = async (listOfCategories, enhanceTag) => {
     }
 };
 
-let enhance = async () => {
-    
-    let listOfCategoriesToSearch = [
-        "NUT-ALLERGY" // dummy allergy
-    ];
-
-    // Get IPS gender and check if is female
-    let gender;
-
-    if (ips == "" || ips == null) {
-        throw new Error("Failed to load IPS: the LEE is getting a empty IPS");
-    }
-    ips.entry.forEach((element) => {
-        if (element.resource.resourceType == "Patient") {
-            gender = element.resource.gender;
-            if (gender != "female") {
-                return htmlData;
-            }
-        }
+let equals = (array, object) => {
+    return array.some((element) => {
+        return (element.code === object.code) && (element.system === object.system);
     });
-
-    // ePI traslation from terminology codes to their human redable translations in the sections
-    let compositions = 0;
-    let categories = [];
-    epi.entry.forEach((entry) => {
-        if (entry.resource.resourceType == "Composition") {
-            compositions++;
-            //Iterated through the Condition element searching for conditions
-            entry.resource.extension.forEach((element) => {
-                
-                // Check if the position of the extension[1] is correct
-                if (element.extension[1].url == "concept") {
-                    // Search through the different terminologies that may be avaible to check in the condition
-                    if (element.extension[1].valueCodeableReference.concept != undefined) {
-                        element.extension[1].valueCodeableReference.concept.coding.forEach(
-                            (coding) => {
-                                console.log("Extension: " + element.extension[0].valueString + ":" + coding.code)
-                                // Check if the code is in the list of categories to search
-                                if (listOfCategoriesToSearch.includes(coding.code)) {
-                                    // Check if the category is already in the list of categories
-                                    categories.push(element.extension[0].valueString);
-                                }
-                            }
-                        );
-                    }
-                }
-            });
-        }
-    });
-
-    if (compositions == 0) {
-        throw new Error('Bad ePI: no category "Composition" found');
-    }
-
-    if (categories.length == 0) {
-        // throw new Error("No categories found", categories);
-        return htmlData;
-    }
-    //Focus (adds highlight class) the html applying every category found
-    return await annotateHTMLsection(categories, "highlight");
-};
+}
 
 return {
     enhance: enhance,
