@@ -22,7 +22,10 @@ let enhance = async () => {
         if (element.resource.resourceType == "Condition") {
             if (element.resource.code != undefined) {
                 element.resource.code.coding.forEach((coding) => {
-                    arrayOfConditionCodes.push(coding.code);
+                    arrayOfConditionCodes.push({
+                        code: coding.code,
+                        system: coding.system,
+                    });
                 });
             }
         }
@@ -50,7 +53,7 @@ let enhance = async () => {
                             (coding) => {
                                 console.log("Extension: " + element.extension[0].valueString + ":" + coding.code)
                                 // Check if the code is in the list of categories to search
-                                if (arrayOfConditionCodes.includes(coding.code)) {
+                                if (arrayOfConditionCodes.includes({ code: coding.code, system: coding.system })) {
                                     // Check if the category is already in the list of categories
                                     categories.push(element.extension[0].valueString);
                                 }
