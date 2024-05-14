@@ -51,7 +51,7 @@ let enhance = async () => {
                     if (element.extension[1].valueCodeableReference.concept != undefined) {
                         element.extension[1].valueCodeableReference.concept.coding.forEach(
                             (coding) => {
-                                console.log("Extension: " + element.extension[0].valueString + ":" + coding.code)
+                                console.log("Extension: " + element.extension[0].valueString + ":" + coding.code + " - " + coding.system)
                                 // Check if the code is in the list of categories to search
                                 if (equals(arrayOfConditionCodes, { code: coding.code, system: coding.system })) {
                                     // Check if the category is already in the list of categories
