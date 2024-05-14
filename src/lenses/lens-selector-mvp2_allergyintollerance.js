@@ -19,7 +19,7 @@ let enhance = async () => {
 
     // Iterates through the IPS entry searching for conditions
     ips.entry.forEach((element) => {
-        if (element.resource.resourceType == "Condition") {
+        if (element.resource.resourceType == "AllergyIntolerance") {
             if (element.resource.code != undefined) {
                 element.resource.code.coding.forEach((coding) => {
                     arrayOfConditionCodes.push({
@@ -40,7 +40,7 @@ let enhance = async () => {
     let compositions = 0;
     let categories = [];
     epi.entry.forEach((entry) => {
-        if (entry.resource.resourceType == "AllergyIntolerance") {
+        if (entry.resource.resourceType == "Composition") {
             compositions++;
             //Iterated through the Condition element searching for conditions
             entry.resource.extension.forEach((element) => {
