@@ -53,7 +53,7 @@ let enhance = async () => {
                             (coding) => {
                                 console.log("Extension: " + element.extension[0].valueString + ":" + coding.code)
                                 // Check if the code is in the list of categories to search
-                                if (arrayOfConditionCodes.includes({ code: coding.code, system: coding.system })) {
+                                if (equals(arrayOfConditionCodes, { code: coding.code, system: coding.system })) {
                                     // Check if the category is already in the list of categories
                                     categories.push(element.extension[0].valueString);
                                 }
@@ -123,6 +123,12 @@ let annotateHTMLsection = async (listOfCategories, enhanceTag) => {
         return annotationProcess(listOfCategories, enhanceTag, document, response);
     }
 };
+
+let equals = (array, object) => {
+    return array.some((element) => {
+        return element.code == object.code && element.system == object.system;
+    });
+}
 
 return {
     enhance: enhance,
