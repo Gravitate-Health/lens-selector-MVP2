@@ -24,6 +24,7 @@ let enhance = async () => {
                 element.resource.ingredient.forEach((ingredient) => {
                     if (ingredient.itemCodeableConcept != undefined) {
                         ingredient.itemCodeableConcept.coding.forEach((coding) => {
+                            console.log("Ingredient: " + coding.code + " - " + coding.system)
                             arrayOfIngredientCodes.push({
                                 code: coding.code,
                                 system: coding.system,
