@@ -126,7 +126,7 @@ let annotateHTMLsection = async (listOfCategories, enhanceTag) => {
 
 let equals = (array, object) => {
     return array.some((element) => {
-        return element.code == object.code && element.system == object.system;
+        return (element.code === object.code) && (element.system === object.system);
     });
 }
 
