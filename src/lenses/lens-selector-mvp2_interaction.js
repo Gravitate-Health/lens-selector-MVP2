@@ -27,7 +27,7 @@ let enhance = async () => {
                             console.log("Ingredient: " + coding.code + " - " + coding.system)
                             arrayOfIngredientCodes.push({
                                 code: coding.code,
-                                system: coding.system,
+                                system: "",
                             });
                         });
                     }
@@ -58,7 +58,7 @@ let enhance = async () => {
                             (coding) => {
                                 console.log("Extension: " + element.extension[0].valueString + ":" + coding.code + " - " + coding.system)
                                 // Check if the code is in the list of categories to search
-                                if (equals(arrayOfIngredientCodes, { code: coding.code, system: coding.system })) {
+                                if (equals(arrayOfIngredientCodes, { code: coding.code, system: "" })) {
                                     // Check if the category is already in the list of categories
                                     categories.push(element.extension[0].valueString);
                                 }
