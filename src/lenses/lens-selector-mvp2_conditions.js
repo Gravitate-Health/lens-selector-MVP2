@@ -15,29 +15,24 @@ let enhance = async () => {
     }
 
     // Instantiates the array of condition codes
-    let arrayOfIngredientCodes = [];
+    let arrayOfConditionCodes = [];
 
     // Iterates through the IPS entry searching for conditions
     ips.entry.forEach((element) => {
-        if (element.resource.resourceType == "Medication") {
-            if (element.resource.ingredient != undefined) {
-                element.resource.ingredient.forEach((ingredient) => {
-                    if (ingredient.itemCodeableConcept != undefined) {
-                        ingredient.itemCodeableConcept.coding.forEach((coding) => {
-                            console.log("Ingredient: " + coding.code + " - " + coding.system)
-                            arrayOfIngredientCodes.push({
-                                code: coding.code,
-                                system: "",
-                            });
-                        });
-                    }
-                })
+        if (element.resource.resourceType == "Condition") {
+            if (element.resource.code != undefined) {
+                element.resource.code.coding.forEach((coding) => {
+                    arrayOfConditionCodes.push({
+                        code: coding.code,
+                        system: coding.system,
+                    });
+                });
             }
         }
     });
 
     // If there are no conditions, return the ePI as it is
-    if (arrayOfIngredientCodes.length == 0) {
+    if (arrayOfConditionCodes.length == 0) {
         return htmlData;
     }
 
@@ -58,7 +53,7 @@ let enhance = async () => {
                             (coding) => {
                                 console.log("Extension: " + element.extension[0].valueString + ":" + coding.code + " - " + coding.system)
                                 // Check if the code is in the list of categories to search
-                                if (equals(arrayOfIngredientCodes, { code: coding.code, system: "" })) {
+                                if (equals(arrayOfConditionCodes, { code: coding.code, system: coding.system })) {
                                     // Check if the category is already in the list of categories
                                     categories.push(element.extension[0].valueString);
                                 }
