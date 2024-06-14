@@ -4,26 +4,6 @@ import fs, { readFile, readdir } from "fs"
 
 const fhirIpsURL = process.env.BASE_URL + "/ips/api/fhir"
 
-const readLensesDir = async () => {
-  try {
-    let path = `${process.cwd()}/build/lenses/`
-    console.log(`Looking for lenses in path: ${path}`);
-    let discoveredLenses = await fs.promises.readdir(path);
-    console.log(`Discovered the following files in dir: ${discoveredLenses || "None"}`);
-    return discoveredLenses
-  } catch (err) {
-    console.error('Error occurred while reading directory!', err);
-  }
-}
-
-const readLensFile = async (path: string) => {
-  try {
-    return await fs.promises.readFile(path, 'utf-8');
-  } catch (err) {
-    console.error('Error occurred while reading file!', err);
-  }
-}
-
 const retrieveLensesNames = async () => {
   try {
     let response = []
@@ -40,18 +20,13 @@ const retrieveLensesNames = async () => {
   }
 }
 
-const retrieveLense = async (lenseId: string): Promise<{lensResource: Object, lens: string} | null> => {
+const retrieveLense = async (lenseId: string): Promise<Object | null> => {
   let lensPath = `/Library?name:exact=${lenseId}`
   try {
     return await fetch(`${fhirIpsURL}${lensPath}`)
       .then(res => res.json())
       .then(bundle => {
-        const dataBase64 = bundle.entry[0].resource.content[0].data
-        const data = atob(dataBase64)
-        return {
-          lensResource: bundle.entry[0].resource,
-          lens: data
-        }
+          return bundle
       })
   } catch (error) {
     console.log(error);
@@ -69,21 +44,15 @@ export const getLens = async (req: Request, res: Response) => {
   }
   try {
     let lens = await retrieveLense(reqlens)
-    let lensObject
     
     if (lens === null) {
       console.log(`Lens ${reqlens} not found.`);
       res.status(404).send({
         message: `Lens ${reqlens} not found.`
       })
-    } else {
-      lensObject = {
-        lens: lens.lens,
-        lensResource: lens.lensResource
-      }
     }
-    console.log(`Sending lens: ${JSON.stringify(lensObject)}`);
-    res.status(200).send(lensObject)
+    console.log(`Sending lens: ${JSON.stringify(lens)}`);
+    res.status(200).send(lens)
     return
   } catch (error) {
     console.log(error);
