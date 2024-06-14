@@ -5,12 +5,12 @@ info:
   description: Gravitate Health Focusing Service. Focuses a Focused ePI.
   contact: {}
 servers:
-  - url: https://fosps.gravitatehealth.eu
+- url: https://fosps.gravitatehealth.eu
 paths:
   /lenses:
     get:
       tags:
-        - Lenses
+      - Lenses
       description: Returns all lenses IDs.
       responses:
         "200":
@@ -29,7 +29,7 @@ paths:
   /lenses/{id}:
     get:
       tags:
-        - Lenses
+      - Lenses
       description: Returns the lense itself.
       responses:
         "200":
@@ -39,9 +39,37 @@ paths:
               schema:
                 type: object
                 properties:
-                  metadata:
-                    type: object
-                  lense:
+                  resourceType:
                     type: string
-                    example: "console.log('Hello World!')"
+                    example: "Bundle"
+                  id:
+                    type: string
+                    example: "049959c2-84ba-4fe1-874b-2ccdbd547e67"
+                  meta:
+                    type: object
+                    properties:
+                      lastUpdated:
+                        type: string
+                        example: "2024-06-14T09:48:58.880+00:00"
+                  type:
+                    type: string
+                    example: "searchset"
+                  total:
+                    type: integer
+                    example: 1
+                  link:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        relation:
+                          type: string
+                          example: "self"
+                        url:
+                          type: string
+                          example: "http://gravitate-health.lst.tfo.upm.es/ips/api/fhir/Library?name%3Aexact=pregnancy-lens"
+                  entry:
+                    type: array
+                    items:
+                      type: object
 
