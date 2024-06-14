@@ -41,34 +41,71 @@ paths:
                 properties:
                   resourceType:
                     type: string
-                    example: "Bundle"
+                    example: "Library"
                   id:
                     type: string
-                    example: "049959c2-84ba-4fe1-874b-2ccdbd547e67"
+                    example: "588"
                   meta:
                     type: object
-                    properties:
-                      lastUpdated:
-                        type: string
-                        example: "2024-06-14T09:48:58.880+00:00"
-                  type:
-                    type: string
-                    example: "searchset"
-                  total:
-                    type: integer
-                    example: 1
-                  link:
+                  extension:
                     type: array
                     items:
                       type: object
-                      properties:
-                        relation:
-                          type: string
-                          example: "self"
-                        url:
-                          type: string
-                          example: "http://gravitate-health.lst.tfo.upm.es/ips/api/fhir/Library?name%3Aexact=pregnancy-lens"
-                  entry:
+                  url:
+                    type: string
+                    example: "http://hl7.eu/fhir/ig/gravitate-health/Library/mock-lib"
+                  identifier:
+                    type: array
+                    items:
+                      type: object
+                  version:
+                    type: string
+                    example: "0.0.1"
+                  name:
+                    type: string
+                    example: "pregnancy-lens"
+                  title:
+                    type: string
+                    example: "pregnancy-lens"
+                  status:
+                    type: string
+                    example: "draft"
+                  experimental:
+                    type: boolean
+                    example: true
+                  type:
+                    type: object
+                  date:
+                    type: string
+                    example: "2024-06-12T12:23:10.005Z"
+                  publisher:
+                    type: string
+                    example: "Gravitate Health Project - UPM Team"
+                  contact:
+                    type: array
+                    items:
+                      type: object
+                  description:
+                    type: string
+                    example: "Lens that highlight or collapses pregnancy related information"
+                  jurisdiction:
+                    type: array
+                    items:
+                      type: object
+                  purpose:
+                    type: string
+                    example: "Collapse or highlight pregnancy related information on a preprocessed ePI."
+                  usage:
+                    type: string
+                    example: "You can import this lens directly to your FHIR Server which suports Library Resource type."
+                  copiright:
+                    type: string
+                    example: "© 2024 Gravitate Health"
+                  parameter:
+                    type: array
+                    items:
+                      type: object
+                  content:
                     type: array
                     items:
                       type: object

@@ -1,19 +1,22 @@
 import { Response, Request } from "express";
 import { Logger } from "../utils/Logger";
-import fs, { readFile, readdir } from "fs"
 
 const fhirIpsURL = process.env.BASE_URL + "/ips/api/fhir"
 
 const retrieveLensesNames = async () => {
   try {
     let response = []
-    fetch(`${fhirIpsURL}/Library`)
-      .then(res => res.json())
-      .then(bundle => {
-        for (let entry of bundle.entry) {
-          response.push(entry.resource.name)
-        }
-      })
+    let lensPath = "/Library"
+    let lenses = await fetch(`${fhirIpsURL}${lensPath}`)
+
+    let lensesBundle = await lenses.json()
+    if (lensesBundle.total === 0) {
+      return []
+    }
+    for (let entry of lensesBundle.entry) {
+      response.push(entry.resource.name)
+    }
+    return response
   } catch (error) {
     console.log(error);
     return null
@@ -23,11 +26,12 @@ const retrieveLensesNames = async () => {
 const retrieveLense = async (lenseId: string): Promise<Object | null> => {
   let lensPath = `/Library?name:exact=${lenseId}`
   try {
-    return await fetch(`${fhirIpsURL}${lensPath}`)
-      .then(res => res.json())
-      .then(bundle => {
-          return bundle
-      })
+    let lenses = await fetch(`${fhirIpsURL}${lensPath}`)
+    let lensesBundle = await lenses.json()
+    if (lensesBundle.total === 0) {
+      return `No lens found with ${lenseId} name`
+    }
+    return lensesBundle.entry[0].resource
   } catch (error) {
     console.log(error);
     return null 
