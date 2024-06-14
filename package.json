@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev ./src/index.ts",
-    "build": "if [ -d \"$PWD/build\" ]; then rm -r \"$PWD/build\"; fi && tsc --incremental && cp -r ./src/lenses ./build",
+    "build": "if [ -d \"$PWD/build\" ]; then rm -r \"$PWD/build\"; fi && tsc --incremental",
     "start": "node build/index.js"
   },
   "repository": {
