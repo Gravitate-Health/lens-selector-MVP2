@@ -28,16 +28,16 @@ spec:
         app: lens-selector-mvp2
     spec:
       containers:
-        - name: lens-selector-mvp2
-          image: gravitate-registry.cr.de-fra.ionos.com/lens-selector-mvp2:latest
-          imagePullPolicy: Always
-          env:
-            - name: ENVIRONMENT
-              value: "prod"
-            - name: BASE_URL
-              value: "gravitate-health.lst.tfo.upm.es"
-          ports:
-            - containerPort: 3000
-              protocol: TCP
+      - name: lens-selector-mvp2
+        image: gravitate-registry.cr.de-fra.ionos.com/lens-selector-mvp2:dev
+        imagePullPolicy: Always
+        env:
+        - name: ENVIRONMENT
+          value: "prod"
+        - name: BASE_URL
+          value: "http://gravitate-health.lst.tfo.upm.es"
+        ports:
+        - containerPort: 3000
+          protocol: TCP
       restartPolicy: Always
 status: {}
