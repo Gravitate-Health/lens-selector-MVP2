@@ -99,7 +99,7 @@ limitations under the License.
 ## Authors and history
 
 - Guillermo Mejías ([@gmej](https://github.com/gmej))
-- Alejo Esteban ([@10alejopain](https://github.com/10alejospain))
+- Alejo Esteban ([@10alejospain](https://github.com/10alejospain))
 - Alejandro Alonso ([@aalonsolopez](https://github.com/aalonsolopez))
 
 
