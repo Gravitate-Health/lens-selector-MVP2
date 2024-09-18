@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 import { Logger } from "../utils/Logger";
 
-const fhirIpsURL = process.env.BASE_URL + "/ips/api/fhir"
+const fhirIpsURL = process.env.BASE_URL + "/epi/api/fhir"
 
 const retrieveLensesNames = async () => {
   try {
