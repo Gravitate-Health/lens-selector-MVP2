@@ -1,52 +1,40 @@
 import { Response, Request } from "express";
 import { Logger } from "../utils/Logger";
-import fs, { readFile, readdir } from "fs"
 
-const readLensesDir = async () => {
-  try {
-    let path = `${process.cwd()}/build/lenses/`
-    console.log(`Looking for lenses in path: ${path}`);
-    let discoveredLenses = await fs.promises.readdir(path);
-    console.log(`Discovered the following files in dir: ${discoveredLenses || "None"}`);
-    return discoveredLenses
-  } catch (err) {
-    console.error('Error occurred while reading directory!', err);
-  }
-}
-
-const readLensFile = async (path: string) => {
-  try {
-    return await fs.promises.readFile(path, 'utf-8');
-  } catch (err) {
-    console.error('Error occurred while reading file!', err);
-  }
-}
+const fhirIpsURL = process.env.BASE_URL + "/epi/api/fhir"
 
 const retrieveLensesNames = async () => {
   try {
-    let lensesNames = await readLensesDir()
-    console.log(`Found the following lenses: ${lensesNames || "None"}`);
-    return await lensesNames
+    let response = []
+    let lensPath = "/Library"
+    let lenses = await fetch(`${fhirIpsURL}${lensPath}`)
+
+    let lensesBundle = await lenses.json()
+    if (lensesBundle.total === 0) {
+      return []
+    }
+    for (let entry of lensesBundle.entry) {
+      response.push(entry.resource.name)
+    }
+    return response
   } catch (error) {
     console.log(error);
     return null
   }
 }
 
-const retrieveLense = async (lenseId: string) => {
-  let lensFilename: string = lenseId + ".js"
-  let lensPath = `${process.cwd()}/build/lenses/${lensFilename}`
-
-  let lensesNames = await retrieveLensesNames()
-  console.log(`Looking for lens: ${lensFilename}`);
-  if (lensesNames?.includes(lensFilename)) {
-    try {
-      return await readLensFile(lensPath)
-    } catch (error) {
-      console.log(error);
+const retrieveLense = async (lenseId: string): Promise<Object | null> => {
+  let lensPath = `/Library?name:exact=${lenseId}`
+  try {
+    let lenses = await fetch(`${fhirIpsURL}${lensPath}`)
+    let lensesBundle = await lenses.json()
+    if (lensesBundle.total === 0) {
+      return `No lens found with ${lenseId} name`
     }
-  } else {
-    return null
+    return lensesBundle.entry[0].resource
+  } catch (error) {
+    console.log(error);
+    return null 
   }
 }
 
@@ -60,12 +48,15 @@ export const getLens = async (req: Request, res: Response) => {
   }
   try {
     let lens = await retrieveLense(reqlens)
-    let lensObject = {
-      metadata: {},
-      lens: lens
+    
+    if (lens === null) {
+      console.log(`Lens ${reqlens} not found.`);
+      res.status(404).send({
+        message: `Lens ${reqlens} not found.`
+      })
     }
-    console.log(`Sending lens: ${JSON.stringify(lensObject)}`);
-    res.status(200).send(lensObject)
+    console.log(`Sending lens: ${JSON.stringify(lens)}`);
+    res.status(200).send(lens)
     return
   } catch (error) {
     console.log(error);
