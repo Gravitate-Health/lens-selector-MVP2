@@ -14,7 +14,7 @@ const retrieveLensesNames = async () => {
       return []
     }
     for (let entry of lensesBundle.entry) {
-      response.push(entry.resource.name)
+      response.push(entry.resource.identifier[0].value)
     }
     return response
   } catch (error) {
@@ -24,12 +24,12 @@ const retrieveLensesNames = async () => {
 }
 
 const retrieveLense = async (lenseId: string): Promise<Object | null> => {
-  let lensPath = `/Library?name:exact=${lenseId}`
+  let lensPath = `/Library?identifier=${lenseId}`
   try {
     let lenses = await fetch(`${fhirIpsURL}${lensPath}`)
     let lensesBundle = await lenses.json()
     if (lensesBundle.total === 0) {
-      return `No lens found with ${lenseId} name`
+      return `No lens found with ${lenseId} identifier`
     }
     return lensesBundle.entry[0].resource
   } catch (error) {
